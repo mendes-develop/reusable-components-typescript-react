@@ -9,7 +9,8 @@ import {
   CheckBox,
   CheckBoxText,
   Button,
-  SignAnchor
+  SignAnchor,
+  ErrorMessage
 } from "../style";
 
 interface IProps {
@@ -20,6 +21,7 @@ const Login: React.FC<IProps> = ({ setLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkbox, setCheckbox] = useState(false);
+  const [errors, setErrors] = useState(true)
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -59,6 +61,10 @@ const Login: React.FC<IProps> = ({ setLogin }) => {
   return (
     <SignContainer>
       <Title>LOGIN</Title>
+      {errors && (<ErrorMessage>
+            Password or Email invalid.
+          </ErrorMessage>)}
+          
 
       <InputWrapper>
         <FontAwesomeIcon icon={faEnvelope} color="var(--main-text-color)" />

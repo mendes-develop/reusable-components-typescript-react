@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const SignContainer = styled.div`
   border-radius: 10px;
@@ -25,11 +25,23 @@ const InputField = styled.input`
   margin: 0.5em auto;
   margin-left: 5px;
   padding: 10px;
-  background-color: #e0e0e0;
+  background-color: #f1f3f4;
   height: 2rem;
   width: 80%;
   font-size: 1.2rem;
+`;
 
+const ErrorMessage = styled.div`
+  margin-bottom: 15px;
+  color: red;
+  border-radius: 5px;
+  border: 1px solid red;
+  display: inline-block;
+  background-color: rgb(255, 220, 224);
+  height: 1.5rem;
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 3px 0px
 `;
 
 const CheckBox = styled.input`
@@ -39,7 +51,6 @@ const CheckBox = styled.input`
 
 const CheckBoxText = styled.p`
   display: inline-block;
-
 `;
 
 const Button = styled.button`
@@ -51,7 +62,6 @@ const Button = styled.button`
   margin-bottom: 2em;
   cursor: pointer;
   font-size: 1.2rem;
-
 `;
 
 const SignAnchor = styled.a`
@@ -60,14 +70,14 @@ const SignAnchor = styled.a`
   text-decoration: underline;
 `;
 
-
 export {
-    SignContainer,
-    Title,
-    InputWrapper,
-    InputField,
-    CheckBox,
-    CheckBoxText,
-    Button,
-    SignAnchor
-}
+  SignContainer,
+  Title,
+  InputWrapper,
+  InputField,
+  CheckBox,
+  CheckBoxText,
+  Button,
+  SignAnchor,
+  ErrorMessage
+};

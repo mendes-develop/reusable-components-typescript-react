@@ -13,7 +13,8 @@ import {
   CheckBox,
   CheckBoxText,
   Button,
-  SignAnchor
+  SignAnchor,
+  ErrorMessage
 } from "../style";
 
 interface IProps {
@@ -76,7 +77,9 @@ const SingUp: React.FC<IProps> = ({ setSignUp }) => {
   return (
     <SignContainer>
       <Title>Sign Up</Title>
-
+      <ErrorMessage>
+            Password or Email invalid.
+          </ErrorMessage>
       <InputWrapper>
         <FontAwesomeIcon icon={faUser} color="var(--main-text-color)" />
         <InputField
