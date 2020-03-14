@@ -1,11 +1,13 @@
 import React from 'react';
+import SignPage from './components/SignPage';
+import NavBar from './components/NavBar'
 import "./App.css"
-import SignPage from './components/SignPage/SignPage/SignPage';
 
 
 function App() {
   return (
     <div>
+      <NavBar/>
       <SignPage />
     </div>
   );

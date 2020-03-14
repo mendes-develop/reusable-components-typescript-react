@@ -63,6 +63,7 @@ const Login: React.FC<IProps> = ({ setLogin }) => {
       <InputWrapper>
         <FontAwesomeIcon icon={faEnvelope} color="var(--main-text-color)" />
         <InputField
+        // style={{"backgroundColor" : "red"}}
           type="email"
           placeholder="Email"
           id="email-login"
