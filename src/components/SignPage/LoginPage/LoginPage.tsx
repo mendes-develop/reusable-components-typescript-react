@@ -12,6 +12,9 @@ import {
   SignAnchor,
   ErrorMessage
 } from "../style";
+import { logUser } from "../../../services/fetch"; //, IUserData 
+
+
 
 interface IProps {
   setLogin: () => void;
@@ -21,7 +24,7 @@ const Login: React.FC<IProps> = ({ setLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkbox, setCheckbox] = useState(false);
-  const [errors, setErrors] = useState(true)
+  const [errors, setErrors] = useState<string[]>([]);
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -29,6 +32,9 @@ const Login: React.FC<IProps> = ({ setLogin }) => {
 
   useEffect(() => {
     (emailRef as any).current.focus();
+    return () => {
+      console.log("Unmounting");
+    };
   }, []);
 
   const onKeyDown = (e: any) => {
@@ -53,23 +59,44 @@ const Login: React.FC<IProps> = ({ setLogin }) => {
     }
   };
 
-  const onSubmit = (e: React.SyntheticEvent) => {
+  const resetForm = (): void => {
+    setPassword("");
+    setEmail("");
+  };
+
+  const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    alert("Submitting");
+    try {
+      const loginResponse = await logUser(email, password);
+      console.log(loginResponse)
+
+      if((loginResponse as any).userData){
+        localStorage.token = (loginResponse as any).userData.token
+        localStorage.username = (loginResponse as any).userData.user.username
+        localStorage.user_id = (loginResponse as any).userData.user.user_id
+        alert(localStorage.username)
+        
+      } else if ((loginResponse as any).error){
+        setErrors([(loginResponse as any).error])
+      }
+    } catch (error){
+      console.log(error)
+      setErrors(["Network request problem"]);
+    }
+    resetForm()
   };
 
   return (
     <SignContainer>
       <Title>LOGIN</Title>
-      {errors && (<ErrorMessage>
-            Password or Email invalid.
-          </ErrorMessage>)}
-          
+      {errors.length
+        ? errors.map((error, index) => <ErrorMessage key={index}>{error}</ErrorMessage>)
+        : null}
 
       <InputWrapper>
         <FontAwesomeIcon icon={faEnvelope} color="var(--main-text-color)" />
         <InputField
-        // style={{"backgroundColor" : "red"}}
+          // style={{"backgroundColor" : "red"}}
           type="email"
           placeholder="Email"
           id="email-login"

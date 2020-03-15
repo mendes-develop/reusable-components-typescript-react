@@ -16,18 +16,24 @@ import {
   SignAnchor,
   ErrorMessage
 } from "../style";
+import { registerUser} from "../../../services/fetch"; //, IUserData  
+
 
 interface IProps {
   setSignUp: () => void;
 }
 
 const SingUp: React.FC<IProps> = ({ setSignUp }) => {
+
+  // Component State
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConf, setPasswordConf] = useState("");
   const [checkbox, setCheckbox] = useState(false);
+  const [errors, setErrors] = useState<string[]>([])
 
+  // Component Refs
   const usernameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -35,10 +41,13 @@ const SingUp: React.FC<IProps> = ({ setSignUp }) => {
   const submitRef = useRef<HTMLButtonElement>(null);
   const checkboxRef = useRef<HTMLInputElement>(null);
 
+  //sets first input on focus
   useEffect(() => {
     (usernameRef as any).current.focus();
+    return () => { console.log("Unmounting")}
   }, []);
 
+  // changes input on focus Enter key
   const onKeyDown = (e: any) => {
     if (e.key === "Enter") {
       switch (e.target.id) {
@@ -69,17 +78,46 @@ const SingUp: React.FC<IProps> = ({ setSignUp }) => {
     }
   };
 
-  const onSubmit = (e: React.SyntheticEvent) => {
+  // Resets the form
+  const resetForm = ():void =>{
+    setUsername("");
+    setEmail("");
+    setPassword("");
+    setPasswordConf("");
+    setCheckbox(false);
+  }
+
+  // POST sign up form
+  const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    alert("Submitting");
+    try {
+      //sends the request to the server
+      const registerResponse = await registerUser(username, email, password, passwordConf)
+
+      //if the response is success, set Local Storage
+      if((registerResponse as any).userData){
+        localStorage.token = (registerResponse as any).userData.token
+        localStorage.username = (registerResponse as any).userData.user.username
+        localStorage.user_id = (registerResponse as any).userData.user.user_id
+        alert(localStorage.username)
+        resetForm()
+
+        //else, set Errors[]
+      } else if ((registerResponse as any).errors){
+        setErrors((registerResponse as any).errors)
+      }
+    } catch (error){
+      console.log(error)
+      setErrors(["Network request problem"]);
+    }
   };
 
   return (
     <SignContainer>
       <Title>Sign Up</Title>
-      <ErrorMessage>
-            Password or Email invalid.
-          </ErrorMessage>
+      {errors.length
+        ? errors.map((error, index) => <ErrorMessage key={index}>{error}</ErrorMessage>)
+        : null}
       <InputWrapper>
         <FontAwesomeIcon icon={faUser} color="var(--main-text-color)" />
         <InputField
@@ -90,6 +128,7 @@ const SingUp: React.FC<IProps> = ({ setSignUp }) => {
           onChange={e => setUsername(e.target.value)}
           ref={usernameRef}
           onKeyDown={e => onKeyDown(e)}
+          required
         />
       </InputWrapper>
 
@@ -103,6 +142,7 @@ const SingUp: React.FC<IProps> = ({ setSignUp }) => {
           onChange={e => setEmail(e.target.value)}
           ref={emailRef}
           onKeyDown={e => onKeyDown(e)}
+          required
         />
       </InputWrapper>
 
