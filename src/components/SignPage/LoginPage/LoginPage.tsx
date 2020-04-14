@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Dispatch, SetStateAction  } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUnlock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -18,9 +18,10 @@ import { logUser } from "../../../services/fetch"; //, IUserData
 
 interface IProps {
   setLogin: () => void;
+  setUserLogged : Dispatch<SetStateAction<boolean>>;
 }
 
-const Login: React.FC<IProps> = ({ setLogin }) => {
+const Login: React.FC<IProps> = ({ setLogin, setUserLogged }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkbox, setCheckbox] = useState(false);
@@ -32,9 +33,6 @@ const Login: React.FC<IProps> = ({ setLogin }) => {
 
   useEffect(() => {
     (emailRef as any).current.focus();
-    return () => {
-      console.log("Unmounting");
-    };
   }, []);
 
   const onKeyDown = (e: any) => {
@@ -74,7 +72,9 @@ const Login: React.FC<IProps> = ({ setLogin }) => {
         localStorage.token = (loginResponse as any).userData.token
         localStorage.username = (loginResponse as any).userData.user.username
         localStorage.user_id = (loginResponse as any).userData.user.user_id
+        setErrors([])
         alert(localStorage.username)
+        setUserLogged(true)
         
       } else if ((loginResponse as any).error){
         setErrors([(loginResponse as any).error])

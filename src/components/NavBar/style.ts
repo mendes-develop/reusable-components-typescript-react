@@ -17,18 +17,28 @@ const NavBarContainer = styled.nav`
     margin: 20px;
   }
   li a {
-    color: black;
     color: white;
     text-decoration: none;
-}
-`
+  }
+`;
 
 const NavLogo = styled.img`
-    height: 80px;
-    margin-left: 40px;
+  height: 80px;
+  margin-left: 40px;
+`;
+const LogoutButton = styled.button`
+  position: absolute;
+  right: 0;
+  margin-right: 50px;
+
+  border:1px solid #f9f68a; 
+ 
+  border-radius: 3px;
+  font-size:16px;
+  font-family:arial, helvetica, sans-serif;
+  /* font-weight: bold;    */
+  padding: 10px 10px 10px 10px; 
+
 `
 
-export {
-    NavBarContainer,
-    NavLogo
-}
+export { NavBarContainer, NavLogo, LogoutButton };

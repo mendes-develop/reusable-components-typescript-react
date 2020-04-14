@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUnlock,
@@ -21,6 +21,7 @@ import { registerUser} from "../../../services/fetch"; //, IUserData
 
 interface IProps {
   setSignUp: () => void;
+  setUserLogged : Dispatch<SetStateAction<boolean>>;
 }
 
 const SingUp: React.FC<IProps> = ({ setSignUp }) => {
@@ -44,7 +45,6 @@ const SingUp: React.FC<IProps> = ({ setSignUp }) => {
   //sets first input on focus
   useEffect(() => {
     (usernameRef as any).current.focus();
-    return () => { console.log("Unmounting")}
   }, []);
 
   // changes input on focus Enter key
@@ -99,8 +99,9 @@ const SingUp: React.FC<IProps> = ({ setSignUp }) => {
         localStorage.token = (registerResponse as any).userData.token
         localStorage.username = (registerResponse as any).userData.user.username
         localStorage.user_id = (registerResponse as any).userData.user.user_id
-        alert(localStorage.username)
         resetForm()
+        setErrors([])
+        alert(localStorage.username)
 
         //else, set Errors[]
       } else if ((registerResponse as any).errors){

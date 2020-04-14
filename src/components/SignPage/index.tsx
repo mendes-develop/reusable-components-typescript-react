@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import LoginPage from "./LoginPage/LoginPage";
 import SignUpPage from "./SignUpPage/SignUpPage";
 
-const SignPage: React.FC = () => {
+interface IProps {
+  setUserLogged : Dispatch<SetStateAction<boolean>>
+}
+
+const SignPage: React.FC<IProps> = ({setUserLogged}) => {
   const [login, setLogin] = useState<boolean>(true);
+  
   const onClick = () => {
     setLogin(!login);
   };
@@ -11,9 +16,9 @@ const SignPage: React.FC = () => {
   return (
     <React.Fragment>
       {login ? (
-        <LoginPage  setLogin={onClick}/>
+        <LoginPage  setLogin={onClick} setUserLogged={setUserLogged}/>
       ) : (
-        <SignUpPage setSignUp={onClick} />
+        <SignUpPage setSignUp={onClick} setUserLogged={setUserLogged}/>
       )}
     </React.Fragment>
   );

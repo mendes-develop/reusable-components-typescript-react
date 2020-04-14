@@ -5,7 +5,7 @@ const SignContainer = styled.div`
   border: 1px solid gray;
   width: 500px;
   height: auto;
-  margin: 6rem auto;
+  margin: auto;
   background-color: white;
   padding: 1em;
   text-align: center;
