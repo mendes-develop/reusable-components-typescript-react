@@ -3,11 +3,11 @@ import styled from "styled-components";
 const SignContainer = styled.div`
   border-radius: 10px;
   border: 1px solid gray;
-  width: 500px;
+  width: 550px;
   height: auto;
-  margin: auto;
+  margin: 100px auto;
   background-color: white;
-  padding: 1em;
+  padding: 2rem;
   text-align: center;
   box-shadow: 10px 10px;
 `;
@@ -41,7 +41,7 @@ const ErrorMessage = styled.div`
   height: 1.5rem;
   width: 100%;
   font-size: 1.2rem;
-  padding: 3px 0px
+  padding: 3px 0px;
 `;
 
 const CheckBox = styled.input`
@@ -55,7 +55,7 @@ const CheckBoxText = styled.p`
 
 const Button = styled.button`
   background: var(--main-highlight-color);
-  border-radius: 3px;
+  border-radius: 10px;
   color: white;
   width: 50%;
   padding: 0.5em 0;

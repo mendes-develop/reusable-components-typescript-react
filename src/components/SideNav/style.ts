@@ -14,10 +14,12 @@ export const UserPicture = styled.div`
   margin: 1rem auto;
   height: 150px;
   width: 150px;
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRgTvvLJDU035FXdyC9ayNaM0DArk9fkcnTUJ2Vj952sBUmsob1&usqp=CAU");
+  background-size: cover;
 `;
 
 export const SideBarButton = styled.div`
   border: 1px solid black;
   margin-bottom: 5px;
-  padding: 20px
+  padding: 20px;
 `;

@@ -1,12 +1,16 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
-import SignPage from './components/SignPage';
-import NavBar from './components/NavBar'
+import SignPage from './components/SignPage/SignPage';
+import NavBar from './components/NavBar/NavBar'
 import Modal from './components/Modal'
-import SideNav from './components/SideNav'
 import { Route, Switch } from "react-router-dom";
 import {setUser} from './reducers/User/actions'
 import {UserState} from './reducers/User/types'
+import MainPage from './pages/Main';
+import UserPage from './pages/User'
+import RegisterPage from './pages/Register'
+import MessagesPage from './pages/Messages'
+import LandingPage from './pages/Landing'
 import "./App.css"
 
 const App = () => {
@@ -15,8 +19,6 @@ const App = () => {
   const selectUserLogged = (state: UserState) => state.userLogged
   const isLogged = useSelector(selectUserLogged)
   const dispatch = useDispatch()
-
-
 
   useEffect(()=>{
     if(localStorage.token){
@@ -33,8 +35,12 @@ const App = () => {
         <>
           <NavBar />
           <Switch>
+            <Route exact path="/messages" component={MessagesPage}/>
             <Route exact path="/modal" component={Modal} />
-            <Route exact path="/sidenav" component={SideNav} />
+            <Route exact path="/main" component={MainPage} />
+            <Route exact path="/user/:id" component={UserPage}/>
+            <Route exact path="/register" component={RegisterPage}/>
+            <Route exact path="/landing" component={LandingPage}/>
           </Switch>
         </>
       

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Dispatch, SetStateAction  } from "react";
+import React, { useState, useEffect, useRef  } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUnlock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -12,16 +12,16 @@ import {
   SignAnchor,
   ErrorMessage
 } from "../style";
+import {useHistory} from 'react-router-dom'
 import { logUser } from "../../../services/fetch"; //, IUserData 
 
 
 
 interface IProps {
   setLogin: () => void;
-  setUserLogged : Dispatch<SetStateAction<boolean>>;
 }
 
-const Login: React.FC<IProps> = ({ setLogin, setUserLogged }) => {
+const Login: React.FC<IProps> = ({ setLogin}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkbox, setCheckbox] = useState(false);
@@ -30,6 +30,8 @@ const Login: React.FC<IProps> = ({ setLogin, setUserLogged }) => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const checkboxRef = useRef<HTMLInputElement>(null);
+
+  let history = useHistory()
 
   useEffect(() => {
     (emailRef as any).current.focus();
@@ -64,25 +66,30 @@ const Login: React.FC<IProps> = ({ setLogin, setUserLogged }) => {
 
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    try {
-      const loginResponse = await logUser(email, password);
-      console.log(loginResponse)
+    // try {
+    //   const loginResponse = await logUser(email, password);
 
-      if((loginResponse as any).userData){
-        localStorage.token = (loginResponse as any).userData.token
-        localStorage.username = (loginResponse as any).userData.user.username
-        localStorage.user_id = (loginResponse as any).userData.user.user_id
-        setErrors([])
-        alert(localStorage.username)
-        setUserLogged(true)
+    //   if((loginResponse as any).userData){
+    //     localStorage.token = (loginResponse as any).userData.token
+    //     localStorage.username = (loginResponse as any).userData.user.username
+    //     localStorage.user_id = (loginResponse as any).userData.user.user_id
+    //     setErrors([])
+    //     alert(localStorage.username)
+
+        // add Redux useDispatch and useSelector
+        // setUserLogged(true) 
         
-      } else if ((loginResponse as any).error){
-        setErrors([(loginResponse as any).error])
-      }
-    } catch (error){
-      console.log(error)
-      setErrors(["Network request problem"]);
-    }
+    //   } else if ((loginResponse as any).error){
+    //     setErrors([(loginResponse as any).error])
+    //   }
+    // } catch (error){
+    //   console.log(error)
+    //   setErrors(["Network request problem"]);
+    // }
+    localStorage.token = "Alex"
+
+    history.push("/main")
+    history.go()
     resetForm()
   };
 

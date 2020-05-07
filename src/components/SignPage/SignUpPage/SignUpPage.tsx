@@ -21,7 +21,6 @@ import { registerUser} from "../../../services/fetch"; //, IUserData
 
 interface IProps {
   setSignUp: () => void;
-  setUserLogged : Dispatch<SetStateAction<boolean>>;
 }
 
 const SingUp: React.FC<IProps> = ({ setSignUp }) => {

@@ -1,5 +1,6 @@
 :root {
-    --main-bg-color: #505393;
+    --main-bg-color: #F9F9FA;
+    /* --main-border-color: #EDEDF0; firefox hover */ 
     --main-text-color: #1e252b;
     --main-highlight-color: #ef5e4a;
     --main-border-color: rgb(46, 56, 66, 0.5);
